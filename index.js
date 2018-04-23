@@ -22,6 +22,12 @@ app.use(
   })
 );
 
+app.get('/api/monologues', (req, res) => {
+  const data = [{ playwright: 'William Shakespeare', lines: ['Hello, my sweet', 'How are you today'] }, { playwright: 'William Shakespeare', lines: ['Hello, my sour', 'How are you yesterday'] }];
+
+  res.json(data);
+});
+
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {

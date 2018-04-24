@@ -8,6 +8,8 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
+const monologuesRouter = require('./routes/monologues');
+
 const app = express();
 
 app.use(
@@ -22,10 +24,22 @@ app.use(
   })
 );
 
-app.get('/api/monologues', (req, res) => {
-  const data = [{ playwright: 'William Shakespeare', lines: ['Hello, my sweet', 'How are you today'] }, { playwright: 'William Shakespeare', lines: ['Hello, my sour', 'How are you yesterday'] }];
+app.use(express.json());
 
-  res.json(data);
+app.use('/api', monologuesRouter);
+
+app.use(function (req, res, next) {
+  const err = new Error('Not found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: app.get('env') === 'development' ? err : {}
+  });
 });
 
 function runServer(port = PORT) {

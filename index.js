@@ -9,6 +9,7 @@ const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
 const monologuesRouter = require('./routes/monologues');
+const commentsRouter = require('./routes/comments');
 
 const app = express();
 
@@ -26,7 +27,8 @@ app.use(
 
 app.use(express.json());
 
-app.use('/api', monologuesRouter);
+app.use('/api/monologues', monologuesRouter);
+app.use('/api/comments', commentsRouter);
 
 app.use(function (req, res, next) {
   const err = new Error('Not found');

@@ -6,8 +6,10 @@ const monologueSchema = new mongoose.Schema({
   title: { type: String },
   playwright: { type: String },
   text: [{ type: String }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   created: { type: Date, default: Date.now },
-  isHidden: { type: Boolean, default: true }
+  isHidden: { type: Boolean, default: true },
+  areCommentsHidden: { type: Boolean, default: true }
 });
 
 monologueSchema.set('toObject', {

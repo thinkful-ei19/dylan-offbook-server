@@ -7,6 +7,9 @@ const Comment = require('../models/comment');
 const Monologue = require('../models/monologue');
 
 router.get('/', (req, res, next) => {
+
+  // const userId = req.user.id;
+
   Comment.find({})
     .sort('comment')
     .then(results => {
@@ -16,6 +19,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/:monologueId', (req, res, next) => {
+
+  // const userId = req.user.id;
+
   Comment.create({
     comment: req.body.comment,
     monologueId: req.params.monologueId

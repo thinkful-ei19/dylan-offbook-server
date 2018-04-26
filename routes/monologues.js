@@ -6,6 +6,9 @@ const router = express.Router();
 const Monologue = require('../models/monologue');
 
 router.get('/', (req, res, next) => {
+
+  // const userId = req.user.id;
+
   Monologue.find({})
     .populate('comments')
     .sort('created')
@@ -19,6 +22,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
+  // const userId = req.user.id;
 
   Monologue.findById({ _id: id })
     .populate('comments')
@@ -32,6 +36,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
   const { title, text, playwright } = req.body;
+  // const userId = req.user.id;
   const newMonologue = { title, text, playwright };
 
   if (!title) {
@@ -52,6 +57,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
+  // const userId = req.user.id;
   const { title, text, playwright, comments } = req.body;
   let updatedMonologue = {};
 
@@ -59,8 +65,6 @@ router.put('/:id', (req, res, next) => {
   if (text) updatedMonologue.text = text;
   if (playwright) updatedMonologue.playwright = playwright;
   if (comments) updatedMonologue.comments = comments;
-
-  // const updatedMonologue = { title, text, playwright, comments };
 
   Monologue.findByIdAndUpdate(id, { $set: updatedMonologue }, { new: true })
     .then(result => {

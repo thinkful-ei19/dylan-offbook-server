@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const commentSchema = new mongoose.Schema({
   comment: { type: String },
   monologueId: { type: mongoose.Schema.Types.ObjectId, ref: 'Monologue' },
-  // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 commentSchema.index({ comment: 1, monologueId: 1 }, { unique: true });

@@ -8,9 +8,9 @@ const Monologue = require('../models/monologue');
 
 router.get('/', (req, res, next) => {
 
-  // const userId = req.user.id;
+  const userId = req.user.id;
 
-  Comment.find({})
+  Comment.find({ userId })
     .sort('comment')
     .then(results => {
       res.json(results);
@@ -20,11 +20,12 @@ router.get('/', (req, res, next) => {
 
 router.post('/:monologueId', (req, res, next) => {
 
-  // const userId = req.user.id;
+  const userId = req.user.id;
 
   Comment.create({
     comment: req.body.comment,
-    monologueId: req.params.monologueId
+    monologueId: req.params.monologueId,
+    userId
   })
     .then(comment => {
       return Monologue.findByIdAndUpdate(req.params.monologueId, {

@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 app.use('/api/users', usersRouter);
 app.use('/api', authRouter);
 
-// app.use(passport.authenticate('jwt', { session: false, failsWithError: true }));
+app.use(passport.authenticate('jwt', { session: false, failsWithError: true }));
 
 app.use('/api/monologues', monologuesRouter);
 app.use('/api/comments', commentsRouter);

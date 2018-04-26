@@ -7,9 +7,9 @@ const Monologue = require('../models/monologue');
 
 router.get('/', (req, res, next) => {
 
-  // const userId = req.user.id;
+  const userId = req.user.id;
 
-  Monologue.find({})
+  Monologue.find({ userId })
     .populate('comments')
     .sort('created')
     .then(results => {
@@ -22,9 +22,9 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  // const userId = req.user.id;
+  const userId = req.user.id;
 
-  Monologue.findById({ _id: id })
+  Monologue.findById({ _id: id, userId })
     .populate('comments')
     .then(result => {
       res.json(result);
@@ -36,8 +36,8 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
 
   const { title, text, playwright } = req.body;
-  // const userId = req.user.id;
-  const newMonologue = { title, text, playwright };
+  const userId = req.user.id;
+  const newMonologue = { title, text, playwright, userId };
 
   if (!title) {
     const err = new Error('Missing `title` in request body');
@@ -57,9 +57,9 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
-  // const userId = req.user.id;
+  const userId = req.user.id;
   const { title, text, playwright, comments } = req.body;
-  let updatedMonologue = {};
+  let updatedMonologue = { userId };
 
   if (title) updatedMonologue.title = title;
   if (text) updatedMonologue.text = text;
